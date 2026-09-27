@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVINORIS - Персонажи</title>
+    <style>
+        html { scrollbar-gutter: stable; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #0b0b0b; color: #ededed; padding-bottom: 60px; overflow-x: hidden; }
+        a { color: inherit; text-decoration: none; }
+
+        header { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; 
+            padding: 20px 60px; 
+            background-color: #0d0d0d; 
+            border-bottom: 1px solid #161616; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; justify-self: start; }
+        .logo-icon { width: 24px; height: 24px; object-fit: contain; filter: invert(1); } 
+        .logo { font-weight: bold; font-size: 20px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        
+        .nav-links { display: flex; gap: 35px; justify-self: center; }
+        .nav-item { color: #888; font-weight: 500; transition: 0.2s; font-size: 15px; cursor: pointer; padding: 5px 0; display: inline-block; }
+        .nav-item:hover, .nav-item.active-menu { color: #fff; }
+        .nav-item.active-menu { border-bottom: 2px solid #fff; }
+
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.3s ease forwards; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #1a1a1a; padding-bottom: 12px; }
+        .section-title { font-size: 24px; font-weight: 600; color: #fff; letter-spacing: 0.5px; }
+        .char-count { font-size: 14px; color: #555; font-weight: 500; }
+
+        /* Стильный блок памятки для мобилок */
+        .info-tip {
+            background: rgba(90, 196, 255, 0.05);
+            border: 1px solid rgba(90, 196, 255, 0.15);
+            border-left: 4px solid #5ac4ff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #8ba3b8;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            line-height: 1.4;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+
+        .card { 
+            background: #121212; 
+            border: 1px solid #1e1e1e; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s; 
+            aspect-ratio: 2 / 3.4; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative; 
+        }
+        .card:hover { transform: scale(1.04); border-color: #444; }
+
+        .card-img-placeholder { 
+            width: 100%; height: 100%; position: absolute; top: 0; left: 0; z-index: 1;
+            background: radial-gradient(circle, #1a1e24 0%, #0f1115 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
+        }
+        .placeholder-icon { font-size: 48px; color: #2c3542; margin-bottom: 10px; }
+        .placeholder-text { font-size: 10px; color: #4f5d73; letter-spacing: 2px; font-weight: bold; text-transform: uppercase; text-align: center; }
+
+        .card-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 16px 12px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 60%, transparent 100%);
+            z-index: 2; display: flex; flex-direction: column; align-items: center; transition: background 0.3s;
+        }
+        .card:hover .card-overlay { background: linear-gradient(to top, rgba(0,0,0,0.98) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.4) 100%); }
+
+        .card-name { font-size: 18px; font-weight: 700; color: #fff; text-align: center; margin-bottom: 10px; }
+        .card-icons { display: flex; justify-content: center; align-items: center; gap: 12px; height: 20px; }
+        
+        .cryo-bg-icon { width: 20px !important; height: 20px !important; background-image: url('./elements/cryo_element.png') !important; background-position: center !important; background-size: contain !important; background-repeat: no-repeat !important; display: block !important; }
+        .cryo-stat-icon { width: 14px !important; height: 14px !important; background-image: url('./elements/cryo_element.png') !important; background-position: center !important; background-size: contain !important; background-repeat: no-repeat !important; display: inline-block !important; margin-right: 6px !important; }
+        .icon-weapon-type { width: 20px !important; height: 20px !important; object-fit: contain !important; display: block !important; }
+
+        .card-stats {
+            width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; margin-top: 0; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+        .stat-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #fff; }
+        .stat-icon-img { width: 14px !important; height: 14px !important; object-fit: contain !important; filter: invert(1) !important; }
+
+        .card:hover .card-icons { opacity: 0; height: 0; overflow: hidden; }
+        .card:hover .card-stats { max-height: 80px; opacity: 1; margin-top: 4px; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="./logo_svinoris.png" class="logo-icon" alt="🐷">
+            <div class="logo">SVINORIS</div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item active-menu">Персонажи</a>
+            <a href="weapons.html" class="nav-item">Оружие</a>
+        </nav>
+        <div></div>
+    </header>
+
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Все персонажи</h2>
+            <span class="char-count">Всего: 1</span>
+        </div>
+
+        <!-- Наша новая памятка для пользователей мобилок -->
+        <div class="info-tip">
+            <span style="font-size: 16px;">💡</span>
+            <span><strong>Памятка:</strong> Зажмите карточку героя (долгий тап), чтобы посмотреть характеристики и таланты.</span>
+        </div>
+
+        <div class="grid">
+            <!-- КАРТОЧКА ДАРЬЕРА -->
+            <a href="darier.html" style="display: block; text-decoration: none; color: inherit;">
+                <div class="card">
+                    <div class="card-img-placeholder">
+                        <div class="placeholder-icon">?</div>
+                        <div class="placeholder-text">Изображение<br>отсутствует</div>
+                    </div>
+                    <div class="card-overlay">
+                        <div class="card-name">Дарьер</div>
+                        <div class="card-icons">
+                            <span class="cryo-bg-icon"></span>
+                            <img src="./weapon_icons/Icon_Sword.webp" class="icon-weapon-type" alt="Sword">
+                        </div>
+                        <div class="card-stats">
+                            <div class="stat-item"><img src="./stats/hp.png" class="stat-icon-img" alt="HP"> 11,347</div>
+                            <div class="stat-item"><img src="./stats/attack.png" class="stat-icon-img" alt="ATK"> 307</div>
+                            <div class="stat-item"><img src="./stats/def.png" class="stat-icon-img" alt="DEF"> 581</div>
+                            <div class="stat-item"><span class="cryo-stat-icon"></span> 0.00%</div>
+                            <div class="stat-item"><img src="./stats/crit_rate.png" class="stat-icon-img" alt="CR"> 5.00%</div>
+                            <div class="stat-item"><img src="./stats/crit_dmg.png" class="stat-icon-img" alt="CD"> 88.0%</div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
+=

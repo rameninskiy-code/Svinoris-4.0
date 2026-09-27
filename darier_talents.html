@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дарьер — Таланты</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, sans-serif; }
+        body { background-color: #0b0b0b; color: #ededed; padding-bottom: 120px; }
+        header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 20px 60px; background-color: #0d0d0d; border-bottom: 1px solid #161616; position: sticky; top: 0; z-index: 100; }
+        .logo-container { display: flex; align-items: center; gap: 10px; justify-self: start; }
+        .logo-icon { width: 24px; height: 24px; filter: invert(1); } 
+        .logo { font-weight: bold; font-size: 20px; color: #fff; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .overlay-bg { max-width: 600px; margin: 30px auto; padding: 0 20px; text-align: center; position: relative; }
+        .click-outside-close { position: absolute; top: -10px; left: 20px; background: rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 11px; font-weight: bold; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.15); }
+        
+        .talents-container { display: flex; flex-direction: column; gap: 30px; margin-top: 50px; text-align: left; }
+        .talent-card { background: #11141a; border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; border-left: 4px solid #5ac4ff; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .talent-header { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; }
+        .talent-icon-box { width: 45px; height: 45px; background: #000; border: 1px solid #5ac4ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 0 10px rgba(90, 196, 255, 0.2); }
+        .talent-icon-img { width: 100%; height: 100%; object-fit: cover; }
+        .talent-title-text { font-size: 16px; font-weight: bold; color: #fff; }
+        .talent-type { font-size: 11px; color: #5ac4ff; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+        
+        .talent-description { font-size: 12px; color: #a0a5b0; line-height: 1.6; margin-bottom: 15px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 8px; }
+        .talent-sub-block { font-size: 12px; color: #8ba3b8; border-left: 2px solid #5ac4ff; padding-left: 10px; margin: 10px 0; line-height: 1.5; }
+        
+        /* Стиль Крио-подсветки */
+        .cryo-text { color: #99edff; font-weight: 600; text-shadow: 0 0 8px rgba(153, 237, 255, 0.3); }
+
+        .scaling-table { background: rgba(0,0,0,0.4); border-radius: 10px; border: 1px solid rgba(255,255,255,0.04); overflow: hidden; }
+        .scaling-row { display: flex; justify-content: space-between; padding: 10px 14px; font-size: 12px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .scaling-row:last-child { border-bottom: none; }
+        .param-name { color: #788896; font-weight: 500; }
+        .param-value { color: #ffcf68; font-weight: bold; font-family: monospace; }
+
+        .bottom-nav-bar { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 30; width: 92%; max-width: 500px; display: flex; gap: 10px; }
+        .nav-btn { flex: 1; display: flex; background: rgba(255,255,255,0.05); color: #888; font-weight: bold; padding: 14px 10px; border-radius: 12px; justify-content: center; align-items: center; font-size: 11px; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.08); text-decoration: none; }
+        .nav-btn.active { background: #5ac4ff; color: #000; border-color: #5ac4ff; box-shadow: 0 5px 20px rgba(90, 196, 255, 0.2); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container"><img src="./logo_svinoris.png" class="logo-icon" alt="🐷"><div class="logo">SVINORIS</div></div>
+    </header>
+
+    <div class="overlay-bg">
+        <a href="index.html" class="click-outside-close">← К списку</a>
+
+        <div class="talents-container">
+            
+            <!-- ТАЛАНТ 1 -->
+            <div class="talent-card">
+                <div class="talent-header">
+                    <div class="talent-icon-box"><img src="./weapon_icons/Icon_Sword.webp" class="talent-icon-img" style="object-fit: contain; width: 26px; height: 26px;"></div>
+                    <div>
+                        <div class="talent-title-text">Обычная атака: Диаблада</div>
+                        <div class="talent-type">Уровень таланта: 9</div>
+                    </div>
+                </div>
+                <div class="talent-description">
+                    <strong>Обычная атака:</strong> До 5 последовательных стремительных ударов.<br><br>
+                    <strong>Заряженная атака:</strong> Быстрый крученый удар, требующий затрат выносливости.<br><br>
+                    <strong>Атака в падении:</strong> Дарьер совершает удар мечом вниз, нанося удар по площади.
+                </div>
+                <div class="scaling-table">
+                    <div class="scaling-row"><span class="param-name">Урон 1-го удара</span><span class="param-value">82.1%</span></div>
+                    <div class="scaling-row"><span class="param-name">Урон 2-го удара</span><span class="param-value">137.1%</span></div>
+                    <div class="scaling-row"><span class="param-name">Урон 3-го удара</span><span class="param-value">96.6%</span></div>
+                    <div class="scaling-row"><span class="param-name">Урон 4-го удара</span><span class="param-value">37.6% x 3</span></div>
+                    <div class="scaling-row"><span class="param-name">Урон 5-го удара</span><span class="param-value">109.6%</span></div>
+                </div>
+            </div>
+
+            <!-- ТАЛАНТ 2 -->
+            <div class="talent-card">
+                <div class="talent-header">
+                    <div class="talent-icon-box"><img src="./skill.png" class="talent-icon-img"></div>
+                    <div>
+                        <div class="talent-title-text">Никсизм: поедающий волю</div>
+                        <div class="talent-type">Уровень таланта: 9</div>
+                    </div>
+                </div>
+                <div class="talent-description">
+                    Дарьер разрушает остатки души, превращая их в бесформенную тень, выполняющую приказы хозяина.<br><br>
+                    <strong>Бесформенная тень:</strong> В зависимости от того, кто является активным героем, имеет разные эффекты:<br>
+                    • <em>Если активный герой Дарьер:</em> Совершает совместные атаки, нанося <span class="cryo-text">Крио урон</span>, зависящий от силы атаки. Совместные атаки бесформенной тени тратят 3.47% общего HP Дарьера, а также дают Дарьеру <span class="cryo-text">Крио инфузию</span> на базовые атаки, дополнительно давая бонус к их урону.<br>
+                    • <em>Если активный герой НЕ Дарьер:</em> Бесформенная тень наносит раз в 3 секунды совместную <span class="cryo-text">Крио атаку</span>, зависящую от показателя силы атаки Дарьера.
+                </div>
+                <div class="talent-sub-block">
+                    <strong>Сияние - Звёздный блеск:</strong><br>
+                    Совместные атаки бесформенной тени наносят <span class="cryo-text">Крио урон</span>, который считается уроном соответствующих реакций звёздного блеска. Атаки Дарьера под <span class="cryo-text">Крио инфузией</span> создают <span class="cryo-text">парографические осколки</span> (наносят <span class="cryo-text">Крио урон</span> реакций звёздного блеска, формируются каждую 2-ю атаку Дарьера).
+                </div>
+                <div class="scaling-table">
+                    <div class="scaling-row"><span class="param-name">Совместные атаки тени</span><span class="param-value">161.3%</span></div>
+                    <div class="scaling-row"><span class="param-name">Повышение урона базовых атак</span><span class="param-value">219.8%</span></div>
+                    <div class="scaling-row"><span class="param-name">Потребление здоровья тени</span><span class="param-value">3.47% общего HP Дарьера</span></div>
+                    <div class="scaling-row"><span class="param-name">Интервал атак (вне Дарьера)</span><span class="param-value">3.0 сек.</span></div>
+                </div>
+            </div>
+
+            <!-- ТАЛАНТ 3 -->
+            <div class="talent-card">
+                <div class="talent-header">
+                    <div class="talent-icon-box"><img src="./burst.png" class="talent-icon-img"></div>
+                    <div>
+                        <div class="talent-title-text">Мортификация сути</div>
+                        <div class="talent-type">Уровень таланта: 9</div>
+                    </div>
+                </div>
+                <div class="talent-description">
+                    Дарьер призывает энергию разложения, которая падает с неба к Дарьеру, после чего Дарьер разлагает само пространство, разрушая материю и создавая <strong>зону расщепления</strong>.<br><br>
+                    <strong>Зона расщепления:</strong> Наносит <span class="cryo-text">Крио урон</span> на высокой скорости, а также сковывает врагов в пространстве (действует только на сквиш-мобов).
+                </div>
+                <div class="scaling-table">
+                    <div class="scaling-row"><span class="param-name">Урон зоны расщепления</span><span class="param-value">17.6% x 16</span></div>
+                    <div class="scaling-row"><span class="param-name">Время сковывания</span><span class="param-value">6.3 сек.</span></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bottom-nav-bar">
+        <a href="darier.html" class="nav-btn">Статы</a>

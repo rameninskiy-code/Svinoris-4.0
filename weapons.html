@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVINORIS - Оружие</title>
+    <style>
+        html { scrollbar-gutter: stable; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #0b0b0b; color: #ededed; padding-bottom: 60px; overflow-x: hidden; }
+        
+        .lvl-trigger { display: none; }
+
+        header { 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; 
+            align-items: center; 
+            padding: 20px 60px; 
+            background-color: #0d0d0d; 
+            border-bottom: 1px solid #161616; 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+        }
+        .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; justify-self: start; }
+        .logo-icon { width: 24px; height: 24px; object-fit: contain; filter: invert(1); } 
+        .logo { font-weight: bold; font-size: 20px; letter-spacing: 2px; color: #fff; text-transform: uppercase; }
+        
+        .nav-links { display: flex; gap: 35px; justify-self: center; }
+        .nav-item { color: #888; font-weight: 500; transition: 0.2s; font-size: 15px; cursor: pointer; padding: 5px 0; display: inline-block; }
+        .nav-item:hover, .nav-item.active-menu { color: #fff; }
+        .nav-item.active-menu { border-bottom: 2px solid #fff; }
+
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; animation: fadeIn 0.3s ease forwards; }
+        .detail-layout { display: flex; gap: 50px; align-items: flex-start; margin-top: 20px; }
+        .detail-left { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .detail-right { flex: 1.2; background: rgba(0,0,0,0.4); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05); }
+
+        .icon-weapon-type { width: 20px !important; height: 20px !important; object-fit: contain !important; display: block !important; }
+
+        /* ИНТЕРАКТИВНАЯ ШКАЛА УРОВНЕЙ */
+        .level-selector { display: flex; gap: 10px; margin: 20px 0 30px 0; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); width: max-content; }
+        .lvl-label { padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; color: #888; transition: 0.2s; }
+        .lvl-label:hover { color: #fff; }
+        
+        .atk-value, .crit-value { display: none; font-size: 2.5rem; color: #ffcf68; font-weight: bold; font-family: monospace; line-height: 1; }
+
+        /* Переключение кнопок шкалы */
+        #lvl-1:checked ~ .container .detail-layout label[for="lvl-1"],
+        #lvl-20:checked ~ .container .detail-layout label[for="lvl-20"],
+        #lvl-50:checked ~ .container .detail-layout label[for="lvl-50"],
+        #lvl-70:checked ~ .container .detail-layout label[for="lvl-70"],
+        #lvl-90:checked ~ .container .detail-layout label[for="lvl-90"] { background: #5ac4ff; color: #000; }
+
+        /* Логика вывода статов по уровням */
+        #lvl-1:checked ~ .container #atk-1, #lvl-20:checked ~ .container #atk-20, #lvl-50:checked ~ .container #atk-50, #lvl-70:checked ~ .container #atk-70, #lvl-90:checked ~ .container #atk-90 { display: block; }
+        #lvl-1:checked ~ .container #cr-1, #lvl-20:checked ~ .container #cr-20, #lvl-50:checked ~ .container #cr-50, #lvl-70:checked ~ .container #cr-70, #lvl-90:checked ~ .container #cr-90 { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .detail-layout { flex-direction: column; gap: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Скрытые переключатели уровней Пожирателя Когнитива -->
+    <input type="radio" id="lvl-1" name="weapon-lvl" class="lvl-trigger" checked>
+    <input type="radio" id="lvl-20" name="weapon-lvl" class="lvl-trigger">
+    <input type="radio" id="lvl-50" name="weapon-lvl" class="lvl-trigger">
+    <input type="radio" id="lvl-70" name="weapon-lvl" class="lvl-trigger">
+    <input type="radio" id="lvl-90" name="weapon-lvl" class="lvl-trigger">
+
+    <header>
+        <div class="logo-container">
+            <img src="./logo_svinoris.png" class="logo-icon" alt="🐷">
+            <div class="logo">SVINORIS</div>
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Персонажи</a>
+            <a href="weapons.html" class="nav-item active-menu">Оружие</a>
+        </nav>
+        <div></div>
+    </header>
+
+    <div class="container">
+        <div class="detail-layout">
+            
+            <!-- Левая часть: Изображение и Название -->
+            <div class="detail-left">
+                <!-- Сюда потом встанет твой арт Пожирателя Когнитива -->
+                <div style="width: 140px; height: 140px; background: radial-gradient(circle, #241a24 0%, #150f15 100%); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 48px; border: 1px solid #422c42; box-shadow: 0 0 20px rgba(180, 90, 255, 0.2);">⚔️</div>
+                <h1 style="font-size: 2.2rem; margin-top: 20px; white-space: nowrap; color: #fff;">Пожиратель Когнитива</h1>
+                <p style="color: #bc5aff; font-weight: bold; letter-spacing: 2px; margin-top: 5px;">⭐⭐⭐⭐⭐ Одноручный меч</p>
+            </div>
+
+            <!-- Правая часть: Характеристики и Шкала -->
+            <div class="detail-right">
+                <h3 style="border-bottom: 1px solid #222; padding-bottom: 10px; letter-spacing: 1px; color: #fff;">ХАРАКТЕРИСТИКИ ПУШКИ</h3>
+                
+                <!-- Интерактивная шкала уровней -->
+                <div class="level-selector">
+                    <label for="lvl-1" class="lvl-label">Lvl 1</label>
+                    <label for="lvl-20" class="lvl-label">Lvl 20</label>
+                    <label for="lvl-50" class="lvl-label">Lvl 50</label>
+                    <label for="lvl-70" class="lvl-label">Lvl 70</label>
+                    <label for="lvl-90" class="lvl-label">Lvl 90</label>
+                </div>
+
+                <!-- Блок Базовой АТК -->
+                <div style="margin-bottom: 25px; display: flex; align-items: center; gap: 15px;">
+                    <img src="./stats/attack.png" style="width: 25px; height: 25px; filter: invert(1);" alt="ATK">
+                    <div>
+                        <div style="font-size: 0.8rem; color: #888; font-weight: bold; margin-bottom: 2px;">Базовая АТК</div>
+                        <div id="atk-1" class="atk-value">44</div>
+                        <div id="atk-20" class="atk-value">119</div>
+                        <div id="atk-50" class="atk-value">293</div>
+                        <div id="atk-70" class="atk-value">429</div>
+                        <div id="atk-90" class="atk-value">542</div>
+                    </div>
+                </div>
+
+                <!-- Блок Крит. Шанса -->
+                <div style="margin-bottom: 35px; display: flex; align-items: center; gap: 15px;">
+                    <img src="./stats/crit_rate.png" style="width: 25px; height: 25px; filter: invert(1);" alt="CR">
+                    <div>
+                        <div style="font-size: 0.8rem; color: #888; font-weight: bold; margin-bottom: 2px;">Крит. шанс</div>
+                        <div id="cr-1" class="crit-value">9.6%</div>
+                        <div id="cr-20" class="crit-value">17.0%</div>
+                        <div id="cr-50" class="crit-value">27.7%</div>
+                        <div id="cr-70" class="crit-value">36.4%</div>
+                        <div id="cr-90" class="crit-value">44.1%</div>
+                    </div>
+                </div>
+
+                <!-- Лор оружия -->
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border-left: 4px solid #bc5aff; margin-bottom: 15px;">
+                    <div style="font-weight: bold; color: #fff; margin-bottom: 6px; font-size: 14px;">Описание лора:</div>
+                    <p style="font-size: 0.9rem; color: #a0a5b0; line-height: 1.6;">Сотканный из тысячи нитей гнили и тысячи молитв о пощаде меч, разрушающий осколки материи. <br><br>Оружие было неизвестно кем создано, неизвестно кто его владелец, неизвестно зачем оно такой формы. О нём ничего известного нет.</p>
+                </div>
+
+                <!-- Пассивный эффект сигнатуры -->
+                <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; border-left: 4px solid #bc5aff;">
+                    <div style="font-weight: bold; color: #bc5aff; margin-bottom: 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;">Пассивный эффект: Грань истины перед гибелью</div>
+                    <p style="font-size: 0.9rem; color: #a0a5b0; line-height: 1.6;">
+                        Повышает HP героя на 20%. Когда экипированный персонаж использует элементальный навык, то он повышает крит. урон на 24% на 11 секунд. <br><br>
+                        Если экипированный персонаж наносит элементальный урон базовой атакой, то он дополнительно получает эффект <strong>Финис Оперис</strong>: увеличивает урон звёздных реакций на 40% на 9 секунд. Когда экипированный персонаж активирует звёздные реакции, то он дополнительно получает 24% силы атаки на 9 секунд. <br><br>
+                        Если экипированный персонаж вызывает колебание HP, то он дополнительно увеличивает бонус крит. урона с вышеописанного эффекта на 75%.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
